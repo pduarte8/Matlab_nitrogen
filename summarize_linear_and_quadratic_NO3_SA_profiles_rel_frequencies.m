@@ -1,0 +1,99 @@
+clearvars;
+
+%load('Profile_Regression_Results_all_profiles_v4.mat','Results');
+%load('Profile_Regression_Results_all_profiles_zero_curv_tol_v4.mat','Results');
+%load('Profile_Regression_Results_all_profiles_max_curv_tol_v4.mat','Results');
+%load('Profile_Regression_Results_all_profiles_for_Pacific_Water_v4.mat','Results');
+load("Profile_Regression_Results_all_profiles_restrictive.mat")
+%% =========================
+% Select NO3 vs SA regressions
+% =========================
+Regression = string({Results.Regression});
+Accepted   = string({Results.accepted_model});
+Sector     = string({Results.Sector});
+
+%is_NO3_SA = Regression == "NO3_vs_SA";
+is_NO3_SA = Regression == "AOU_vs_NO3";
+R = Results(is_NO3_SA);
+
+Accepted = Accepted(is_NO3_SA);
+Sector   = Sector(is_NO3_SA);
+
+%% =========================
+% Latitude band from sector name
+% =========================
+LatBand = strings(size(Sector));
+LatBand(contains(Sector,"7080")) = "70–80N";
+LatBand(contains(Sector,"8090")) = "80–90N";
+LatBand(LatBand=="") = "Other";
+
+GroupLabel = Sector + " " + LatBand;
+Groups = unique(GroupLabel,'stable');
+
+%% =========================
+% Initialize counters
+% =========================
+nGroups = numel(Groups);
+
+n_lin_pos   = zeros(nGroups,1);
+n_lin_neg   = zeros(nGroups,1);
+n_quad_src  = zeros(nGroups,1);
+n_quad_sink = zeros(nGroups,1);
+n_none      = zeros(nGroups,1);
+
+%% =========================
+% Loop over groups
+% =========================
+for g = 1:nGroups
+    ig = GroupLabel == Groups(g);
+
+    % ----- Linear
+    il = Accepted(ig) == "linear";
+    if any(il)
+        slopes = [R(ig).Deming_slope];
+        slopes = slopes(il);
+
+        n_lin_pos(g) = sum(slopes > 0);
+        n_lin_neg(g) = sum(slopes < 0);
+    end
+
+    % ----- Quadratic
+    iq = Accepted(ig) == "quadratic";
+    if any(iq)
+        b = [R(ig).quad_linear];
+        c = [R(ig).quad_curvature];
+
+        b = b(iq);
+        c = c(iq);
+
+        n_quad_src(g)  = sum(b > 0 & c < 0);
+        n_quad_sink(g) = sum(b < 0 & c > 0);
+    end
+
+    % ----- None
+    n_none(g) = sum(Accepted(ig) == "none");
+end
+
+%% =========================
+% Plot
+% =========================
+figure; hold on
+Total = n_lin_pos+n_lin_neg+n_quad_src+n_quad_sink+n_none;
+bar(categorical(Groups), ...
+    [n_lin_pos./Total n_lin_neg./Total n_quad_src./Total n_quad_sink./Total n_none./Total], ...
+    'stacked');
+
+ylabel('Number of profiles');
+
+legend({ ...
+    'Linear (positive slope)', ...
+    'Linear (negative slope)', ...
+    'Quadratic (source-like)', ...
+    'Quadratic (sink-like)', ...
+    'None'}, ...
+    'Location','best');
+
+title('Profile-level nitrate versus Salinity regression outcomes');
+grid on
+box on
+xtickangle(35);
