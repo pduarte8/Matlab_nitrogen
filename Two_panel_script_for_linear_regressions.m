@@ -20,7 +20,7 @@ clear S
 % Load regression results
 % =========================================================
 
-load('Profile_Regression_Results_all_profiles_v4.mat','Results');
+load('Profile_Regression_Results_all_profiles_restrictive.mat','Results');
 
 %% =========================================================
 % Filter Results: NO3 vs SA, linear, positive slope, 80–90N

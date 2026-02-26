@@ -4,7 +4,8 @@
 
 clearvars; clc;
 alpha = 0.05;
-load('Profile_Regression_Results_all_profiles_v4.mat','Results');
+load('Profile_Regression_Results_all_profiles_restrictive.mat','Results');
+input key
 
 %% =========================
 % Selection
@@ -102,9 +103,9 @@ if p_kw < 0.05
     comp = multcompare(stats_kw, ...
         'CType','dunn-sidak', ...
         'Display','off');
-    pvals = comp(:,6);   % raw p-values
-    [p_fdr] = mafdr(pvals, 'BHFDR', true);
-    h_fdr = p_fdr < alpha;
+    %pvals = comp(:,6);   % raw p-values
+    %[p_fdr] = mafdr(pvals, 'BHFDR', true);
+    %h_fdr = p_fdr < alpha;
     PostHoc = array2table(comp, ...
         'VariableNames',{'Group1','Group2','Lower','Diff','Upper','pValue'});
 
@@ -114,8 +115,8 @@ if p_kw < 0.05
     PostHoc.Sector2 = GroupNames(PostHoc.Group2);
 
     PostHoc = movevars(PostHoc,{'Sector1','Sector2'},'Before','Lower');
-    PostHoc.p_FDR = p_fdr;
-    PostHoc.h_FDR = h_fdr;
+    %PostHoc.p_FDR = p_fdr;
+    %PostHoc.h_FDR = h_fdr;
     disp('Post-hoc Dunn–Šidák comparisons:')
     disp(PostHoc(:,{'Sector1','Sector2','pValue'}))
 else

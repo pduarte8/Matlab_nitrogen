@@ -4,7 +4,7 @@ clearvars;
 %load('Profile_Regression_Results_all_profiles_zero_curv_tol_v4.mat','Results');
 %load('Profile_Regression_Results_all_profiles_max_curv_tol_v4.mat','Results');
 %load('Profile_Regression_Results_all_profiles_for_Pacific_Water_v4.mat','Results');
-load("Profile_Regression_Results_all_profiles_restrictive.mat")
+%load("Profile_Regression_Results_all_profiles_restrictive.mat")
 %load("Profile_Regression_Results_all_profiles_restrictive_April-September.mat")
 %% =========================
 % Select NO3 vs SA regressions
@@ -13,12 +13,12 @@ Regression = string({Results.Regression});
 Accepted   = string({Results.accepted_model});
 Sector     = string({Results.Sector});
 
-is_AOU_NO3 = Regression == "AOU_vs_NO3";
+is_NO3_SA = Regression == "NO3_vs_SA";
 
-R = Results(is_AOU_NO3);
+R = Results(is_NO3_SA);
 
-Accepted = Accepted(is_AOU_NO3);
-Sector   = Sector(is_AOU_NO3);
+Accepted = Accepted(is_NO3_SA);
+Sector   = Sector(is_NO3_SA);
 
 %% =========================
 % Latitude band from sector name
@@ -96,7 +96,7 @@ legend({ ...
     'None'}, ...
     'Location','best');
 
-title('Profile-level AOU versus nitrate regression outcomes');
+title('Profile-level nitrate versus SA regression outcomes');
 grid on
 box on
 xtickangle(35);

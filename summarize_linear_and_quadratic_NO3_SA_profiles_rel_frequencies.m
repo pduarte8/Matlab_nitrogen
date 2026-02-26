@@ -4,8 +4,8 @@ clearvars;
 %load('Profile_Regression_Results_all_profiles_zero_curv_tol_v4.mat','Results');
 %load('Profile_Regression_Results_all_profiles_max_curv_tol_v4.mat','Results');
 %load('Profile_Regression_Results_all_profiles_for_Pacific_Water_v4.mat','Results');
-load("Profile_Regression_Results_all_profiles_restrictive.mat")
-%load("Profile_Regression_Results_all_profiles_restrictive_April-September.mat")
+%load("Profile_Regression_Results_all_profiles_restrictive.mat")
+load("Profile_Regression_Results_all_profiles_restrictive_April-September.mat")
 %% =========================
 % Select NO3 vs SA regressions
 % =========================
@@ -86,7 +86,7 @@ bar(GroupCategories, ...
     [n_lin_pos./Total n_lin_neg./Total n_quad_src./Total n_quad_sink./Total n_none./Total], ...
     'stacked');
 
-ylabel('Number of profiles');
+ylabel('Profile frequency');
 
 legend({ ...
     'Linear (positive slope)', ...
