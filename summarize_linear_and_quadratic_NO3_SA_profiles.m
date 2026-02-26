@@ -1,11 +1,7 @@
 clearvars;
 
 %load('Profile_Regression_Results_all_profiles_v4.mat','Results');
-%load('Profile_Regression_Results_all_profiles_zero_curv_tol_v4.mat','Results');
-%load('Profile_Regression_Results_all_profiles_max_curv_tol_v4.mat','Results');
-%load('Profile_Regression_Results_all_profiles_for_Pacific_Water_v4.mat','Results');
-load("Profile_Regression_Results_all_profiles_restrictive.mat")
-%load("Profile_Regression_Results_all_profiles_restrictive_April-September.mat")
+load('Profile_Regression_Results_all_profiles_restrictive.mat','Results');
 %% =========================
 % Select NO3 vs SA regressions
 % =========================
@@ -70,10 +66,11 @@ for g = 1:nGroups
 
         n_quad_src(g)  = sum(b > 0 & c < 0);
         n_quad_sink(g) = sum(b < 0 & c > 0);
+        n_quad_other(g) = sum(b > 0 & c > 0) + sum(b < 0 & c < 0);
     end
 
     % ----- None
-    n_none(g) = sum(Accepted(ig) == "none");
+    n_none(g) = sum(Accepted(ig) == "none") + n_quad_other(g);
 end
 
 %% =========================
@@ -83,7 +80,7 @@ figure; hold on
 GroupCategories = categorical(Groups, Groups, 'Ordinal', true);
 Total = n_lin_pos+n_lin_neg+n_quad_src+n_quad_sink+n_none;
 bar(GroupCategories, ...
-    [n_lin_pos./Total n_lin_neg./Total n_quad_src./Total n_quad_sink./Total n_none./Total], ...
+    [n_lin_pos n_lin_neg n_quad_src n_quad_sink n_none], ...
     'stacked');
 
 ylabel('Number of profiles');
@@ -95,8 +92,8 @@ legend({ ...
     'Quadratic (sink-like)', ...
     'None'}, ...
     'Location','best');
+    title('Profile-level nitrate versus SA regression outcomes');
 
-title('Profile-level nitrate versus SA regression outcomes');
 grid on
 box on
 xtickangle(35);

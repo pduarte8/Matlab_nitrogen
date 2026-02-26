@@ -13,12 +13,12 @@ Regression = string({Results.Regression});
 Accepted   = string({Results.accepted_model});
 Sector     = string({Results.Sector});
 
-is_NO3_SA = Regression == "NO3_vs_SA";
+is_AOU_NO3 = Regression == "AOU_vs_NO3";
 
-R = Results(is_NO3_SA);
+R = Results(is_AOU_NO3);
 
-Accepted = Accepted(is_NO3_SA);
-Sector   = Sector(is_NO3_SA);
+Accepted = Accepted(is_AOU_NO3);
+Sector   = Sector(is_AOU_NO3);
 
 %% =========================
 % Latitude band from sector name
@@ -96,7 +96,7 @@ legend({ ...
     'None'}, ...
     'Location','best');
 
-title('Profile-level nitrate versus SA regression outcomes');
+title('Profile-level AOU versus nitrate regression outcomes');
 grid on
 box on
 xtickangle(35);

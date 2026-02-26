@@ -192,7 +192,7 @@ for d = 1:size(DataSets,1)
                 continue
             end
 
-            Lin = diagnose_linearity_adaptive(x,y);
+            Lin = diagnose_linearity_adaptive_restrictive(x,y);
 
             if N >= MinN_quad
                 Quad = diagnose_quadratic_structure(x,y);
