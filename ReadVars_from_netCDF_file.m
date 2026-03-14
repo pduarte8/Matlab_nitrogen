@@ -1,8 +1,8 @@
 
-%OutputFile = 'European_Sector';
-%StructurName = 'EuropeanSector7080N'
+%OutputFile = 'Barents_and_Arctic_European_Sector';
+%StructurName = 'BarentsSector'
 %FileName = 'data_from_GLODAPv2.2023_European_sector_70-80N.nc';
-%StructurName = 'EuropeanSector8090N'
+%StructurName = 'EuropeanSector'
 %FileName = 'data_from_GLODAPv2.2023_European_sector_80-90N.nc';
 
 %OutputFile = 'Siberian_Sector';
