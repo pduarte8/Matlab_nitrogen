@@ -86,18 +86,6 @@ Here is a list of the independent scripts in this project, along with their desc
                   depths > 100 m. This lines can be edited to add other selections. For example,
                   just a given period of time, based on UNIXSECS (referred to 1970) in the input matlab files.
 
-### Script 3: **[Nitrate_vs_Salinity_vs_AOU_patterns_profile_data_v5.m] (Nitrate_vs_Salinity_vs_AOU_patterns_profile_data_v5.m)**
-- **Purpose**: Computes linear and curvilinear regressions between nitrate and salinity absolute
-               and between apparent oxygen utilization and nitrate for each section and latitude band, using 
-               diagnose_linearity_adaptive_restrictive.m and diagnose_quadratic_structure.m. functions (see below)
-- **Inputs**: All the matlab files listed above.
-- **Outputs**: One matlab file with detailed results of the linear and quadratic regression analysis, per sector and laritude band.
-- **How to Run**: Just typing the script name and making sure that the input files are accessible. In this script
-                  there is the following line: k = find(WM(:,j) >= 30 & WM(:,j) <= 50 & depth(:,j) >= UpperDepthLimit);
-                  This is to select the available resuls for Atlantic Water types and obtained at 
-                  depths > 100 m. This lines can be edited to add other selections. For example,
-                  just a given period of time, based on UNIXSECS (referred to 1970) in the input matlab files.
-
 ### Script 4: **[Nitrate_vs_Salinity_vs_AOU_patterns_whole_data_v5.m] (Nitrate_vs_Salinity_vs_AOU_patterns_whole_data_v5.m)**
 - **Purpose**: The same as the previous script but here data per sector and latitude band is agregatted before linear and quadratic
                regressions are calculated.
@@ -113,7 +101,7 @@ Here is a list of the independent scripts in this project, along with their desc
 - **Purpose**: Computes linear and curvilinear regressions between nitrate and salinity absolute
                and between apparent oxygen utilization and nitrate for each section and for 
                sea ice-covered and open water areas using 
-               diagnose_linearity_adaptive_restrictive.m and diagnose_quadratic_structure.m. functions (see below)
+               diagnose_linearity_adaptive_restrictive.m and diagnose_quadratic_structure.m functions (see below)
                and sea-ice masks for the period 1980-2025
 - **Inputs**: All the matlab files listed above and the sea ice masks that may be downloaded from: 
               https://doi.org/10.21334/NPOLAR.2026.807E1A75
@@ -125,11 +113,28 @@ Here is a list of the independent scripts in this project, along with their desc
                   depths > 100 m. This lines can be edited to add other selections. For example,
                   just a given period of time, based on UNIXSECS (referred to 1970) in the input matlab files.
 
+### Script 6: **[summarize_linear_and_quadratic_NO3_SA_profiles.m] (summarize_linear_and_quadratic_NO3_SA_profiles.m)**
+- **Purpose**: Summarizes the results of script Nitrate_vs_Salinity_vs_AOU_patterns_profile_data_v5.m (see above)
+- **Inputs**: The matlab file resulting from Nitrate_vs_Salinity_vs_AOU_patterns_profile_data_v5.m
+- **Outputs**: A bar graph showing the absolute frequencies of different types of significant regressions
+               or their absence, for each sector and latitude band. 
+- **How to Run**: Just typing the script name and making sure that the input files are accessible. 
+                  Check first lines of the script to decide which input file to use.
 
+### Function 1: **[diagnose_linearity_adaptive_restrictive.m] (diagnose_linearity_adaptive_restrictive.m)**
+- **Purpose**: Computes Deming regressions using several criteria to evaluate their significance, which 
+               are detailed in the accompanying paper (see also below). 
+- **Inputs**: Function arguments which are two vectors with the values of x and y variables
+- **Outputs**: A record detailing the regression results.  
+- **How to Run**: Just typing the script name followed by the arguments (Inputs, see above).
 
-Nitrate_vs_Salinity_vs_AOU_patterns_whole_data_v5.m: Computes linear and curvilinear regressions between nitrate and salinity absolute and between apparent oxygen utilization and nitrate for each section, using diagnose_linearity_adaptive_restrictive.m and diagnose_quadratic_structure.m.
+### Function 2: **[diagnose_quadratic_structure.m] (diagnose_quadratic_structure.m)**
+- **Purpose**: Computes quadratic regressions using several criteria to evaluate their significance, which 
+               are detailed in the accompanying paper (see also below). 
+- **Inputs**: Function arguments which are two vectors with the values of x and y variables
+- **Outputs**: A record detailing the regression results.  
+- **How to Run**: Just typing the script name followed by the arguments (Inputs, see above).
 
-Nitrate_vs_Salinity_vs_AOU_patterns_profile_data_v5.m: Computes linear and curvilinear regressions between nitrate and salinity absolute and between apparent oxygen utilization and nitrate for each profile of each section, using diagnose_linearity_adaptive_restrictive.m and diagnose_quadratic_structure.m.
 
 summarize_linear_and_quadratic_NO3_SA_profiles.m: Summarizes results obtained with the previous script, producing a graph with bars showing the number of significant linear regressions with positive and with negative slopes, the number of curvilinear regressions of the sink and source types and the number of results without any significant linear or curvilinear trends. These results are presented per sector and latitude range.
 
