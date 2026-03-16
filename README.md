@@ -229,6 +229,14 @@ Here is a list of the independent scripts in this project, along with their desc
 - **How to Run**: Just typing the script name followed by the arguments (Inputs, see above).
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> 98d8270c9532adf3f7f49454a80b63ad61839b1d
 
 
 
